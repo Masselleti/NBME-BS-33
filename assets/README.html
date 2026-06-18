@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Academy - Installation Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0b4a6f;
+            --primary-light: #0e5a87;
+            --accent: #0fb2ff;
+            --accent-light: #aadef5;
+            --bg: #0a1929;
+            --card: #132f4c;
+            --text: #e3f2fd;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a1929 0%, #1a2332 100%);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(11, 74, 111, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(15, 178, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            border-radius: 32px;
+            padding: 60px 50px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 25px 50px -12px rgba(15, 178, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(15, 178, 255, 0.2), transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-30px, -30px) rotate(90deg); }
+            50% { transform: translate(0, -50px) rotate(180deg); }
+            75% { transform: translate(30px, -30px) rotate(270deg); }
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 24px;
+            border: 3px solid rgba(15, 178, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(15, 178, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: #fff;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--accent-light);
+            margin-bottom: 32px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(15, 178, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(15, 178, 255, 0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(15, 178, 255, 0.2);
+        }
+        
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(15, 178, 255, 0.3);
+        }
+        
+        h2 {
+            font-size: 28px;
+            color: #fff;
+            font-weight: 800;
+            flex: 1;
+        }
+        
+        .platform-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .platform-tab {
+            background: rgba(15, 178, 255, 0.1);
+            border: 2px solid rgba(15, 178, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .platform-tab:hover {
+            background: rgba(15, 178, 255, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .platform-tab.active {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            border-color: var(--accent);
+        }
+        
+        .platform-tab-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        
+        .platform-tab-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .platform-content {
+            display: none;
+        }
+        
+        .platform-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step {
+            background: rgba(15, 178, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .step-desc {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        .code-block {
+            background: #0a1929;
+            border: 1px solid rgba(15, 178, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--accent-light);
+            overflow-x: auto;
+        }
+        
+        .alert {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-left: 4px solid var(--success);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            display: flex;
+            gap: 12px;
+        }
+        
+        .alert-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .alert-content {
+            flex: 1;
+        }
+        
+        .alert-title {
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 6px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+        
+        .contact-item {
+            background: rgba(15, 178, 255, 0.05);
+            border: 1px solid rgba(15, 178, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(15, 178, 255, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .contact-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        
+        .contact-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .contact-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent);
+            word-break: break-all;
+        }
+        
+        .contact-value a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .contact-value a:hover {
+            color: var(--accent-light);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            padding: 8px 0;
+            padding-left: 28px;
+            position: relative;
+        }
+        
+        li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        strong {
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+            
+            .platform-tabs {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 28px 24px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="logo">MA</div>
+            <h1>Medicine Academy</h1>
+            <p class="hero-subtitle">Premium Medical Question Bank - Installation Guide</p>
+            <div class="badges">
+                <div class="badge">✓ Zero Installation</div>
+                <div class="badge">✓ Works Offline</div>
+                <div class="badge">✓ Cross-Platform</div>
+            </div>
+        </div>
+
+        <!-- Platform Selection -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">💻</div>
+                <h2>Choose Your Platform</h2>
+            </div>
+            
+            <div class="platform-tabs">
+                <div class="platform-tab active" onclick="showPlatform('windows')">
+                    <div class="platform-tab-icon">🪟</div>
+                    <div class="platform-tab-title">Windows</div>
+                </div>
+                <div class="platform-tab" onclick="showPlatform('mac')">
+                    <div class="platform-tab-icon">🍎</div>
+                    <div class="platform-tab-title">macOS</div>
+                </div>
+            </div>
+
+            <!-- Windows Instructions -->
+            <div id="windows-content" class="platform-content active">
+                <h3 style="color: #fff; margin-bottom: 24px; font-size: 24px;">📌 Windows - Super Easy!</h3>
+                
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        Locate the File
+                    </div>
+                    <div class="step-desc">
+                        Find this file in the same folder:
+                        <div class="code-block">Windows_Users_Click.bat</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        Double-Click to Launch
+                    </div>
+                    <div class="step-desc">
+                        <strong>That's it!</strong> Just double-click on <code>Windows_Users_Click.bat</code>
+                        <br><br>
+                        The application will:
+                        <ul style="margin-top: 12px;">
+                            <li>Start a local server automatically</li>
+                            <li>Open in your default browser</li>
+                            <li>Work completely offline</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <div class="alert-title">No Installation Required!</div>
+                        Windows has everything built-in. No downloads, no Python, no Node.js needed.
+                    </div>
+                </div>
+            </div>
+
+            <!-- macOS Instructions -->
+            <div id="mac-content" class="platform-content">
+                <h3 style="color: #fff; margin-bottom: 24px; font-size: 24px;">🍎 macOS - Just as Easy!</h3>
+                
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">1</span>
+                        Locate the File
+                    </div>
+                    <div class="step-desc">
+                        Find this file in the same folder:
+                        <div class="code-block">Mac_Users_Click.command</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">2</span>
+                        First Launch (One-Time Security Step)
+                    </div>
+                    <div class="step-desc">
+                        <strong>First time only:</strong>
+                        <ul style="margin-top: 12px;">
+                            <li><strong>Right-click</strong> on <code>Mac_Users_Click.command</code></li>
+                            <li>Select <strong>"Open"</strong> from the menu</li>
+                            <li>Click <strong>"Open"</strong> again in the security dialog</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">
+                        <span class="step-number">3</span>
+                        Future Launches
+                    </div>
+                    <div class="step-desc">
+                        After the first time, simply <strong>double-click</strong> the file!
+                        <br>No security dialog will appear again.
+                    </div>
+                </div>
+
+                <div class="alert">
+                    <div class="alert-icon">✅</div>
+                    <div class="alert-content">
+                        <div class="alert-title">Python Pre-installed!</div>
+                        Most Macs have Python 3 built-in. If you see "Python not found", install from <a href="https://www.python.org" target="_blank" style="color: var(--accent);">python.org</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">✨</div>
+                <h2>Features</h2>
+            </div>
+            <ul>
+                <li><strong>Learning Mode:</strong> Study at your own pace with instant explanations</li>
+                <li><strong>Exam Mode:</strong> Simulate real test conditions with timed blocks</li>
+                <li><strong>Advanced Highlighting:</strong> 6 color highlighter with auto-save</li>
+                <li><strong>Personal Notes:</strong> Add your own clinical pearls to any question</li>
+                <li><strong>Flag System:</strong> Mark difficult questions for later review</li>
+                <li><strong>Dark Mode:</strong> Easy on the eyes for long study sessions</li>
+                <li><strong>Offline Mode:</strong> No internet required after launch</li>
+                <li><strong>Cross-Platform:</strong> Works on Windows and Mac</li>
+            </ul>
+        </div>
+
+        <!-- Troubleshooting -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">🔧</div>
+                <h2>Troubleshooting</h2>
+            </div>
+
+            <div class="step">
+                <div class="step-title">
+                    ❌ Browser doesn't open automatically
+                </div>
+                <div class="step-desc">
+                    Manually open your browser and go to:
+                    <div class="code-block">http://localhost:5550</div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-title">
+                    ❌ Port 5550 is in use
+                </div>
+                <div class="step-desc">
+                    The server will automatically find another available port.
+                    <br>Check the terminal window for the actual URL.
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-title">
+                    ❌ Questions don't load
+                </div>
+                <div class="step-desc">
+                    Verify these folders exist:
+                    <ul style="margin-top: 12px;">
+                        <li><code>Data/</code> folder with question banks</li>
+                        <li><code>js/</code> folder with required files</li>
+                        <li><code>index.html</code> in the root</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact & Support -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📞</div>
+                <h2>Contact & Support</h2>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label">Email Support</div>
+                    <div class="contact-value">
+                        <a href="mailto:Support@Medicine.ac">Support@Medicine.ac</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-label">WhatsApp / Telegram</div>
+                    <div class="contact-value">
+                        <a href="https://wa.me/447403663465" target="_blank">+44 7403 663465</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">👥</div>
+                    <div class="contact-label">Telegram Community</div>
+                    <div class="contact-value">
+                        <a href="https://t.me/medicine_Academy" target="_blank">@medicine_Academy</a>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">
+                        1,000+ Medical Resources
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <div class="contact-label">Official Website</div>
+                    <div class="contact-value">
+                        <a href="https://medicine.ac" target="_blank">medicine.ac</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert" style="margin-top: 32px; background: rgba(15, 178, 255, 0.1); border-left-color: var(--accent);">
+                <div class="alert-icon">👨‍⚕️</div>
+                <div class="alert-content">
+                    <div class="alert-title" style="color: var(--accent);">Contact Dr. Aidan Rami</div>
+                    For personalized support, reach out via WhatsApp/Telegram or Email above.
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-logo">Medicine Academy</div>
+            <p>Premium Medical Education • Advanced Board Review</p>
+            <p style="margin-top: 12px; opacity: 0.7;">
+                © 2025 Medicine Academy. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function showPlatform(platform) {
+            // Update tabs
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.platform-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(platform + '-content').classList.add('active');
+        }
+
+        // Detect OS and auto-select
+        window.addEventListener('DOMContentLoaded', () => {
+            const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+            if (isMac) {
+                document.querySelectorAll('.platform-tab')[1].click();
+            }
+        });
+    </script>
+</body>
+</html>
