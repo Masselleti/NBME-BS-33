@@ -3286,20 +3286,20 @@
         .commentary-content table { border-collapse: collapse; }
         .question-stem table td,
         .question-stem table th { padding: 6px 14px; vertical-align: top; }
-        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) {
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) {
             border-collapse: collapse !important;
             border: 1px solid #b0b8c4 !important;
             margin: 12px 0 !important;
             width: auto !important;
         }
-        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) td,
-        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) th {
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) td,
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) th {
             border: 1px solid #b0b8c4 !important;
             padding: 6px 14px !important;
         }
-        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header),
-        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header) td,
-        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header) th {
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)),
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) td,
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) th {
             border-color: #4a5562 !important;
         }
 </style>
