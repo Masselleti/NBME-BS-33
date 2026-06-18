@@ -3277,6 +3277,31 @@
         .uw-header-nav .uw-nav-btn[title*="Next" i] .uw-nav-icon {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 7h16M13 2l5 5-5 5'/></svg>") !important;
         }
+
+        /* === Grid borders on question-stem data tables (ported from UWorld) ===
+           Lab-value / data tables in the stem were rendering borderless. Give
+           multi-row stem tables the same grid as explanation tables. Single-row
+           callouts and column-header alignment tables stay borderless. */
+        .question-stem table,
+        .commentary-content table { border-collapse: collapse; }
+        .question-stem table td,
+        .question-stem table th { padding: 6px 14px; vertical-align: top; }
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) {
+            border-collapse: collapse !important;
+            border: 1px solid #b0b8c4 !important;
+            margin: 12px 0 !important;
+            width: auto !important;
+        }
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) td,
+        .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header) th {
+            border: 1px solid #b0b8c4 !important;
+            padding: 6px 14px !important;
+        }
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header),
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header) td,
+        .nbme-skin.uw-skin.nbme-reverse .question-stem table:has(tr + tr):not(.uw-stem-column-header) th {
+            border-color: #4a5562 !important;
+        }
 </style>
 <script>
 window.uwCopyQuestion = function(btn){
