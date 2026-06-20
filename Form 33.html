@@ -2673,7 +2673,6 @@
         function openMediaModal(src, cap) {
             const mc = document.getElementById('modal-content');
             mc.innerHTML = `<img src="${src}">`;
-            if (cap && cap !== 'null' && cap !== 'undefined') mc.innerHTML += `<div class="modal-caption" style="color:#fff; text-align:center; padding:10px;">${cap}</div>`;
             document.getElementById('media-modal').classList.add('show');
         }
 
