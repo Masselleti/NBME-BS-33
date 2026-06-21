@@ -1989,6 +1989,14 @@
             else localStorage.setItem(flagKey, 'true');
             uwRenderSidebar();
         }
+        /* Right-click an answer choice to strike it out, UWorld-style (added by request). */
+        if (!window.__uwRightClickStrike) {
+            window.__uwRightClickStrike = true;
+            document.addEventListener('contextmenu', function (e) {
+                var opt = (e.target && e.target.closest) ? e.target.closest('.answer-option') : null;
+                if (opt) { e.preventDefault(); e.stopPropagation(); opt.classList.toggle('eliminated'); return false; }
+            }, false);
+        }
         function uwInjectStrikeButtons() {
             document.querySelectorAll('.nbme-skin.uw-skin .answer-option').forEach(opt => {
                 if (opt.querySelector('.uw-strike-btn')) return;
