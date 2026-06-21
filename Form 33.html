@@ -3669,7 +3669,25 @@
         .nbme-skin.uw-skin .question-stem table:has(tr + tr):not(.uw-stem-column-header):not(:has(table)) tr:first-child:not(:has(td:not(:empty))) {
             display: none !important;
         }
-</style>
+
+        /* MA-HL-EXPL-FIX: show text highlights inside explanations. The
+           ".commentary-content * { background: transparent }" reset was hiding the
+           non-!important .hl-* backgrounds, so highlights were invisible in the
+           explanation. Restore the pastel background + readable dark text (incl. reverse/dark mode). */
+        .nbme-skin .commentary-content .hl-yellow { background-color: #fff6a7 !important; color: #1f2937 !important; }
+        .nbme-skin .commentary-content .hl-green  { background-color: #c8f7c5 !important; color: #1f2937 !important; }
+        .nbme-skin .commentary-content .hl-blue   { background-color: #cfe9ff !important; color: #1f2937 !important; }
+        .nbme-skin.nbme-reverse .commentary-content .hl-yellow,
+        .nbme-skin.uw-skin.nbme-reverse .commentary-content .hl-yellow,
+        html.dark .nbme-skin .commentary-content .hl-yellow { background-color: #fff6a7 !important; color: #1f2937 !important; }
+        .nbme-skin.nbme-reverse .commentary-content .hl-green,
+        .nbme-skin.uw-skin.nbme-reverse .commentary-content .hl-green,
+        html.dark .nbme-skin .commentary-content .hl-green  { background-color: #c8f7c5 !important; color: #1f2937 !important; }
+        .nbme-skin.nbme-reverse .commentary-content .hl-blue,
+        .nbme-skin.uw-skin.nbme-reverse .commentary-content .hl-blue,
+        html.dark .nbme-skin .commentary-content .hl-blue   { background-color: #cfe9ff !important; color: #1f2937 !important; }
+    
+        </style>
 <script>
 window.uwCopyQuestion = function(btn){
   try{
