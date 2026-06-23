@@ -1137,6 +1137,19 @@
         html.dark .lm-count { color: #7fd6f0 !important; background: rgba(33, 174, 217, 0.22) !important; }
         .lm-row.lm-disabled { opacity:.45; cursor:not-allowed; }
         .lm-row.lm-disabled:hover { background:transparent; }
+        /* ===== Organ-system subcategories (nested under Pathology & Physiology) ===== */
+        .lm-group { display:block; }
+        .lm-toggle { flex:0 0 auto; width:16px; text-align:center; color:var(--muted); font-size:0.72em;
+            line-height:1; cursor:pointer; user-select:none; transition:color .12s ease; }
+        .lm-toggle:hover { color:var(--nbme-header-bot); }
+        .lm-toggle-blank { cursor:default; visibility:hidden; }
+        .lm-row.lm-parent { cursor:pointer; }
+        .lm-children { display:none; }
+        .lm-children.expanded { display:block; }
+        .lm-row.lm-subrow { padding-left:52px; background:rgba(127,127,127,0.045); }
+        .lm-row.lm-subrow .lm-name { font-weight:600; font-size:0.94em; }
+        .lm-row.lm-subrow .lm-cb { width:17px; height:17px; }
+        .lm-row.lm-subrow .lm-count { font-size:0.85em; min-width:34px; padding:2px 9px; }
         .lm-actionbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:20px;
             padding:16px 18px; border:1px solid var(--border); border-radius:14px; background:var(--card);
             box-shadow:var(--elev-1); position:sticky; bottom:12px; flex-wrap:wrap; }
@@ -2639,12 +2652,140 @@
         const FORM_DB_PATH = "Comprehensive Basic Science Self-Assessment - Form 33";
         const DISCIPLINE_MAP = {"1145289":"Behavioral Sciences","1145290":"Pharmacology","1145291":"Behavioral Sciences","1145292":"Physiology","1145293":"Pathology","1145294":"Physiology","1145295":"Gross Anatomy & Embryology","1145296":"Biochemistry & Nutrition","1145297":"Physiology","1145298":"Behavioral Sciences","1145299":"Biochemistry & Nutrition","1145300":"Gross Anatomy & Embryology","1145301":"Pathology","1145302":"Physiology","1145303":"Behavioral Sciences","1145304":"Pathology","1145305":"Gross Anatomy & Embryology","1145306":"Gross Anatomy & Embryology","1145307":"Biochemistry & Nutrition","1145308":"Behavioral Sciences","1145309":"Microbiology","1145310":"Immunology","1145311":"Immunology","1145312":"Pathology","1145313":"Behavioral Sciences","1145314":"Gross Anatomy & Embryology","1145315":"Pathology","1145316":"Gross Anatomy & Embryology","1145317":"Pathology","1145318":"Physiology","1145319":"Biochemistry & Nutrition","1145320":"Behavioral Sciences","1145321":"Microbiology","1145322":"Pharmacology","1145323":"Immunology","1145324":"Microbiology","1145325":"Pharmacology","1145326":"Pathology","1145327":"Pathology","1145328":"Pathology","1145329":"Pharmacology","1145330":"Pathology","1145331":"Behavioral Sciences","1145332":"Gross Anatomy & Embryology","1145333":"Immunology","1145334":"Pathology","1145335":"Biochemistry & Nutrition","1145336":"Pathology","1145337":"Immunology","1145338":"Pathology","1145339":"Pharmacology","1145340":"Pathology","1145341":"Pathology","1145342":"Behavioral Sciences","1145343":"Physiology","1145344":"Physiology","1145345":"Microbiology","1145346":"Behavioral Sciences","1145347":"Gross Anatomy & Embryology","1145348":"Pathology","1145349":"Behavioral Sciences","1145350":"Gross Anatomy & Embryology","1145351":"Microbiology","1145352":"Pathology","1145353":"Gross Anatomy & Embryology","1145354":"Microbiology","1145355":"Genetics","1145356":"Pharmacology","1145357":"Physiology","1145358":"Pathology","1145359":"Pathology","1145360":"Biochemistry & Nutrition","1145361":"Behavioral Sciences","1145362":"Behavioral Sciences","1145363":"Physiology","1145364":"Pathology","1145365":"Pathology","1145366":"Pharmacology","1145367":"Pathology","1145368":"Pharmacology","1145369":"Behavioral Sciences","1145370":"Gross Anatomy & Embryology","1145371":"Gross Anatomy & Embryology","1145372":"Immunology","1145373":"Pathology","1145374":"Pathology","1145375":"Pathology","1145376":"Gross Anatomy & Embryology","1145377":"Pathology","1145378":"Pharmacology","1145379":"Pathology","1145380":"Behavioral Sciences","1145381":"Behavioral Sciences","1145382":"Gross Anatomy & Embryology","1145383":"Gross Anatomy & Embryology","1145384":"Immunology","1145385":"Pathology","1145386":"Pathology","1145387":"Immunology","1145388":"Gross Anatomy & Embryology","1145389":"Immunology","1145390":"Pharmacology","1145391":"Pharmacology","1145392":"Gross Anatomy & Embryology","1145393":"Pathology","1145394":"Pathology","1145395":"Behavioral Sciences","1145396":"Behavioral Sciences","1145397":"Pathology","1145398":"Pathology","1145399":"Pathology","1145400":"Pathology","1145401":"Behavioral Sciences","1145402":"Pathology","1145403":"Pathology","1145404":"Physiology","1145405":"Pathology","1145406":"Pathology","1145407":"Pathology","1145408":"Behavioral Sciences","1145409":"Immunology","1145410":"Biochemistry & Nutrition","1145411":"Microbiology","1145412":"Behavioral Sciences","1145413":"Pharmacology","1145414":"Gross Anatomy & Embryology","1145415":"Pharmacology","1145416":"Physiology","1145417":"Pharmacology","1145418":"Pharmacology","1145419":"Pharmacology","1145420":"Biochemistry & Nutrition","1145421":"Behavioral Sciences","1145422":"Microbiology","1145423":"Microbiology","1145424":"Gross Anatomy & Embryology","1145425":"Pathology","1145426":"Pharmacology","1145427":"Microbiology","1145428":"Physiology","1145429":"Physiology","1145430":"Pathology","1145431":"Pathology","1145432":"Pharmacology","1145433":"Behavioral Sciences","1145434":"Pathology","1145435":"Behavioral Sciences","1145436":"Pathology","1145437":"Pathology","1145438":"Immunology","1145439":"Pathology","1145440":"Microbiology","1145441":"Behavioral Sciences","1145442":"Gross Anatomy & Embryology","1145443":"Pharmacology","1145444":"Biochemistry & Nutrition","1145445":"Gross Anatomy & Embryology","1145446":"Immunology","1145447":"Biochemistry & Nutrition","1145448":"Behavioral Sciences","1145449":"Microbiology","1145450":"Pathology","1145451":"Pathology","1145452":"Pharmacology","1145453":"Gross Anatomy & Embryology","1145454":"Pathology","1145455":"Behavioral Sciences","1145456":"Pathology","1145457":"Pathology","1145458":"Biochemistry & Nutrition","1145459":"Behavioral Sciences","1145460":"Physiology","1145461":"Behavioral Sciences","1145462":"Pathology","1145463":"Microbiology","1145464":"Pathology","1145465":"Pharmacology","1145466":"Genetics","1145467":"Gross Anatomy & Embryology","1145468":"Physiology","1145469":"Pathology","1145470":"Genetics","1145471":"Gross Anatomy & Embryology","1145472":"Physiology","1145473":"Behavioral Sciences","1145474":"Pharmacology","1145475":"Gross Anatomy & Embryology","1145476":"Behavioral Sciences","1145477":"Pathology","1145478":"Microbiology","1145479":"Gross Anatomy & Embryology","1145480":"Pharmacology","1145481":"Pathology","1145482":"Immunology","1145483":"Gross Anatomy & Embryology","1145484":"Pharmacology","1145485":"Pathology","1145486":"Gross Anatomy & Embryology","1145487":"Behavioral Sciences"};
         const DISCIPLINE_DEFS = [{"name": "Pathology", "range": "45-55"}, {"name": "Physiology", "range": "30-40"}, {"name": "Pharmacology", "range": "10-20"}, {"name": "Biochemistry & Nutrition", "range": "5-15"}, {"name": "Microbiology", "range": "10-20"}, {"name": "Immunology", "range": "5-15"}, {"name": "Gross Anatomy & Embryology", "range": "10-20"}, {"name": "Histology & Cell Biology", "range": "5-15"}, {"name": "Behavioral Sciences", "range": "10-15"}, {"name": "Genetics", "range": "5-10"}];
-        const DISCIPLINE_NOTE = "Questions are grouped by the discipline each item primarily tests. Counts reflect this Form 33 set (199 items) and need not match the USMLE blueprint ranges, which are overlapping content axes.";
+        const DISCIPLINE_NOTE = "Questions are grouped by the discipline each item primarily tests. Counts reflect this Form 33 set (199 items) and need not match the USMLE blueprint ranges, which are overlapping content axes. Pathology and Physiology are also grouped by organ system (inferred from item content).";
 
         let lmView = 'block';
         let lmSel = { discipline: new Set(), block: new Set() };
         let lmBlocks = [];
 
+        // ===== Organ-system subcategories for Pathology & Physiology (added) =====
+        // qid -> organ system (inferred from item content); covers the Pathology & Physiology items only.
+        const PATHOPHYS_SYSTEM_MAP = {"1145292":"Cardiovascular","1145293":"Respiratory and Renal/Urinary","1145294":"Cardiovascular","1145297":"Cardiovascular","1145301":"Cardiovascular","1145302":"Multisystem Processes & Disorders","1145304":"Cardiovascular","1145312":"Blood & Lymphoreticular and Immune","1145315":"Blood & Lymphoreticular and Immune","1145317":"Reproductive & Endocrine","1145318":"Reproductive & Endocrine","1145326":"Behavioral Health & Nervous/Special Senses","1145327":"Respiratory and Renal/Urinary","1145328":"Gastrointestinal","1145330":"Blood & Lymphoreticular and Immune","1145334":"Cardiovascular","1145336":"Cardiovascular","1145338":"Gastrointestinal","1145340":"Blood & Lymphoreticular and Immune","1145341":"Blood & Lymphoreticular and Immune","1145343":"Respiratory and Renal/Urinary","1145344":"Behavioral Health & Nervous/Special Senses","1145348":"Behavioral Health & Nervous/Special Senses","1145352":"Reproductive & Endocrine","1145357":"Respiratory and Renal/Urinary","1145358":"Respiratory and Renal/Urinary","1145359":"Reproductive & Endocrine","1145363":"Cardiovascular","1145364":"Musculoskeletal, Skin & Subcutaneous","1145365":"Cardiovascular","1145367":"Respiratory and Renal/Urinary","1145373":"Gastrointestinal","1145374":"Behavioral Health & Nervous/Special Senses","1145375":"Reproductive & Endocrine","1145377":"Musculoskeletal, Skin & Subcutaneous","1145379":"Respiratory and Renal/Urinary","1145385":"Reproductive & Endocrine","1145386":"Multisystem Processes & Disorders","1145393":"Cardiovascular","1145394":"Reproductive & Endocrine","1145397":"Respiratory and Renal/Urinary","1145398":"Reproductive & Endocrine","1145399":"Behavioral Health & Nervous/Special Senses","1145400":"Reproductive & Endocrine","1145402":"Behavioral Health & Nervous/Special Senses","1145403":"Musculoskeletal, Skin & Subcutaneous","1145404":"Behavioral Health & Nervous/Special Senses","1145405":"Gastrointestinal","1145406":"Reproductive & Endocrine","1145407":"Musculoskeletal, Skin & Subcutaneous","1145416":"Respiratory and Renal/Urinary","1145425":"Cardiovascular","1145428":"Reproductive & Endocrine","1145429":"Respiratory and Renal/Urinary","1145430":"Respiratory and Renal/Urinary","1145431":"Musculoskeletal, Skin & Subcutaneous","1145434":"Cardiovascular","1145436":"Respiratory and Renal/Urinary","1145437":"Gastrointestinal","1145439":"Respiratory and Renal/Urinary","1145450":"Cardiovascular","1145451":"Blood & Lymphoreticular and Immune","1145454":"Multisystem Processes & Disorders","1145456":"Blood & Lymphoreticular and Immune","1145457":"Reproductive & Endocrine","1145460":"Cardiovascular","1145462":"Musculoskeletal, Skin & Subcutaneous","1145464":"Musculoskeletal, Skin & Subcutaneous","1145468":"Reproductive & Endocrine","1145469":"Reproductive & Endocrine","1145472":"Behavioral Health & Nervous/Special Senses","1145477":"Respiratory and Renal/Urinary","1145481":"Multisystem Processes & Disorders","1145485":"Respiratory and Renal/Urinary"};
+        const SUBCAT_DISCIPLINES = ["Pathology", "Physiology"];
+        const ORGAN_SYSTEM_ORDER = [
+            "Multisystem Processes & Disorders",
+            "Musculoskeletal, Skin & Subcutaneous",
+            "Behavioral Health & Nervous/Special Senses",
+            "Respiratory and Renal/Urinary",
+            "Blood & Lymphoreticular and Immune",
+            "Reproductive & Endocrine",
+            "Gastrointestinal",
+            "Cardiovascular"
+        ];
+        const DISC_SUBSEP = " ||| ";
+        function discHasSubcats(disc) { return SUBCAT_DISCIPLINES.indexOf(disc) !== -1; }
+        function discSystemsFor(disc) {
+            const present = {};
+            for (const k in DISCIPLINE_MAP) {
+                if (DISCIPLINE_MAP[k] === disc) { const s = PATHOPHYS_SYSTEM_MAP[k]; if (s) present[s] = true; }
+            }
+            return ORGAN_SYSTEM_ORDER.filter(s => present[s]);
+        }
+        function discLeafQids(leafKey) {
+            const ids = [];
+            const sep = leafKey.indexOf(DISC_SUBSEP);
+            if (sep === -1) {
+                for (const k in DISCIPLINE_MAP) if (DISCIPLINE_MAP[k] === leafKey) ids.push(parseInt(k, 10));
+            } else {
+                const disc = leafKey.slice(0, sep), sys = leafKey.slice(sep + DISC_SUBSEP.length);
+                for (const k in DISCIPLINE_MAP) if (DISCIPLINE_MAP[k] === disc && PATHOPHYS_SYSTEM_MAP[k] === sys) ids.push(parseInt(k, 10));
+            }
+            return ids;
+        }
+        function discLeafCount(leafKey) { return discLeafQids(leafKey).length; }
+        function discLeafKeys(disc) {
+            if (!discHasSubcats(disc)) return [disc];
+            return discSystemsFor(disc).map(s => disc + DISC_SUBSEP + s);
+        }
+        function discSelectedIds(selSet) {
+            const ids = new Set();
+            selSet.forEach(lk => discLeafQids(lk).forEach(id => ids.add(id)));
+            return [...ids].sort((a, b) => a - b);
+        }
+        function discActiveKeys() {
+            const counts = disciplineCounts();
+            const keys = [];
+            DISCIPLINE_DEFS.forEach(d => {
+                if ((counts[d.name] || 0) === 0) return;
+                discLeafKeys(d.name).forEach(lk => { if (discLeafCount(lk) > 0) keys.push(lk); });
+            });
+            return keys;
+        }
+        function buildDisciplineGrid(grid, selSet, onChange) {
+            grid.innerHTML = '';
+            const counts = disciplineCounts();
+            DISCIPLINE_DEFS.forEach(d => {
+                const total = counts[d.name] || 0;
+                const group = document.createElement('div');
+                group.className = 'lm-group';
+                if (discHasSubcats(d.name) && total > 0) {
+                    group.appendChild(discParentGroup(d, total, selSet, onChange));
+                } else {
+                    group.appendChild(discLeafRow(d.name, d.name, 'Blueprint ' + d.range + '%', total, selSet, onChange, total === 0));
+                }
+                grid.appendChild(group);
+            });
+        }
+        function discLeafRow(leafKey, name, sub, count, selSet, onChange, disabled) {
+            const row = document.createElement('label');
+            row.className = 'lm-row' + (disabled ? ' lm-disabled' : '');
+            row.innerHTML = '<span class="lm-toggle lm-toggle-blank">▶</span>' +
+                '<input type="checkbox" class="lm-cb"' + (selSet.has(leafKey) ? ' checked' : '') + (disabled ? ' disabled' : '') + '>' +
+                '<span class="lm-name">' + name + '<span class="lm-sub">' + sub + '</span></span>' +
+                '<span class="lm-count">' + count + '</span>';
+            if (!disabled) {
+                const cb = row.querySelector('input');
+                cb.addEventListener('change', () => { if (cb.checked) selSet.add(leafKey); else selSet.delete(leafKey); onChange(); });
+            }
+            return row;
+        }
+        function discParentGroup(d, total, selSet, onChange) {
+            const frag = document.createDocumentFragment();
+            const systems = discSystemsFor(d.name);
+            const leafKeys = systems.map(s => d.name + DISC_SUBSEP + s);
+            const prow = document.createElement('div');
+            prow.className = 'lm-row lm-parent';
+            const tog = document.createElement('span'); tog.className = 'lm-toggle'; tog.textContent = '▶';
+            const cb = document.createElement('input'); cb.type = 'checkbox'; cb.className = 'lm-cb';
+            const nameWrap = document.createElement('span'); nameWrap.className = 'lm-name';
+            nameWrap.innerHTML = d.name + '<span class="lm-sub">Blueprint ' + d.range + '% · by organ system</span>';
+            const cnt = document.createElement('span'); cnt.className = 'lm-count'; cnt.textContent = total;
+            prow.appendChild(tog); prow.appendChild(cb); prow.appendChild(nameWrap); prow.appendChild(cnt);
+            const childWrap = document.createElement('div'); childWrap.className = 'lm-children';
+            function syncParent() {
+                const n = leafKeys.filter(k => selSet.has(k)).length;
+                cb.checked = n > 0 && n === leafKeys.length;
+                cb.indeterminate = n > 0 && n < leafKeys.length;
+            }
+            systems.forEach((s, i) => {
+                const lk = leafKeys[i];
+                const c = discLeafCount(lk);
+                const srow = document.createElement('label');
+                srow.className = 'lm-row lm-subrow';
+                srow.innerHTML = '<input type="checkbox" class="lm-cb"' + (selSet.has(lk) ? ' checked' : '') + '>' +
+                    '<span class="lm-name">' + s + '</span>' +
+                    '<span class="lm-count">' + c + '</span>';
+                const scb = srow.querySelector('input');
+                scb.addEventListener('change', () => { if (scb.checked) selSet.add(lk); else selSet.delete(lk); syncParent(); onChange(); });
+                childWrap.appendChild(srow);
+            });
+            cb.addEventListener('change', () => {
+                const on = cb.checked;
+                leafKeys.forEach(k => { if (on) selSet.add(k); else selSet.delete(k); });
+                childWrap.querySelectorAll('input').forEach((el, i) => { el.checked = selSet.has(leafKeys[i]); });
+                cb.indeterminate = false;
+                onChange();
+            });
+            function toggleExpand() {
+                const open = childWrap.classList.toggle('expanded');
+                tog.textContent = open ? '▼' : '▶';
+            }
+            prow.addEventListener('click', (e) => { if (e.target === cb) return; toggleExpand(); });
+            syncParent();
+            frag.appendChild(prow);
+            frag.appendChild(childWrap);
+            return frag;
+        }
         function disciplineCounts() {
             const c = {};
             for (const k in DISCIPLINE_MAP) { const d = DISCIPLINE_MAP[k]; c[d] = (c[d]||0)+1; }
@@ -2689,11 +2830,7 @@
             if (lmView === 'discipline') {
                 note.textContent = DISCIPLINE_NOTE;
                 note.style.display = 'block';
-                const counts = disciplineCounts();
-                DISCIPLINE_DEFS.forEach(d => {
-                    const n = counts[d.name] || 0;
-                    grid.appendChild(lmRow('discipline', d.name, d.name, 'Blueprint ' + d.range + '%', n, n === 0));
-                });
+                buildDisciplineGrid(grid, lmSel.discipline, lmUpdateBar);
             } else {
                 note.style.display = 'none';
                 lmBlocks.forEach(b => {
@@ -2722,8 +2859,7 @@
         function lmSelectedIds() {
             const ids = new Set();
             if (lmView === 'discipline') {
-                const sel = lmSel.discipline;
-                for (const k in DISCIPLINE_MAP) { if (sel.has(DISCIPLINE_MAP[k])) ids.add(parseInt(k, 10)); }
+                discSelectedIds(lmSel.discipline).forEach(id => ids.add(id));
             } else {
                 const sel = lmSel.block;
                 if (sel.size) {
@@ -2741,8 +2877,7 @@
 
         function lmActiveKeys() {
             if (lmView === 'discipline') {
-                const counts = disciplineCounts();
-                return DISCIPLINE_DEFS.filter(d => (counts[d.name] || 0) > 0).map(d => d.name);
+                return discActiveKeys();
             }
             return lmBlocks.filter(b => b.count > 0).map(b => String(b.id));
         }
@@ -2811,11 +2946,7 @@
             if (exView === 'discipline') {
                 note.textContent = DISCIPLINE_NOTE;
                 note.style.display = 'block';
-                const counts = disciplineCounts();
-                DISCIPLINE_DEFS.forEach(d => {
-                    const n = counts[d.name] || 0;
-                    grid.appendChild(exRow('discipline', d.name, d.name, 'Blueprint ' + d.range + '%', n, n === 0));
-                });
+                buildDisciplineGrid(grid, exSel.discipline, exUpdateBar);
             } else {
                 note.style.display = 'none';
                 lmBlocks.forEach(b => {
@@ -2844,8 +2975,7 @@
         function exSelectedIds() {
             const ids = new Set();
             if (exView === 'discipline') {
-                const sel = exSel.discipline;
-                for (const k in DISCIPLINE_MAP) { if (sel.has(DISCIPLINE_MAP[k])) ids.add(parseInt(k, 10)); }
+                discSelectedIds(exSel.discipline).forEach(id => ids.add(id));
             } else {
                 const sel = exSel.block;
                 if (sel.size) {
@@ -2863,8 +2993,7 @@
 
         function exActiveKeys() {
             if (exView === 'discipline') {
-                const counts = disciplineCounts();
-                return DISCIPLINE_DEFS.filter(d => (counts[d.name] || 0) > 0).map(d => d.name);
+                return discActiveKeys();
             }
             return lmBlocks.filter(b => b.count > 0).map(b => String(b.id));
         }
