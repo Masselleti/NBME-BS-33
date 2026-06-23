@@ -3723,6 +3723,9 @@
             });
 
             document.querySelector('.content').addEventListener('mouseup', (e) => { if (hlPalette.contains(e.target)) return; setTimeout(showPalette, 10); });
+            // Triple-click selects a whole paragraph; the native selection can spill past the
+            // highlightable area, so select the clicked block's contents within it and show the palette.
+            document.querySelector('.content').addEventListener('click', (e) => { if (e.detail < 3 || hlPalette.contains(e.target)) return; const area = e.target.closest && e.target.closest('.question-stem, .option-text, .commentary-content'); if (!area) return; let block = e.target; while (block && block !== area && block.parentNode && block.parentNode !== area) block = block.parentNode; if (!block || !area.contains(block)) block = area; try { const r = document.createRange(); r.selectNodeContents(block); const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (err) { return; } setTimeout(showPalette, 0); });
             document.querySelector('.content').addEventListener('touchend', (e) => { if (hlPalette.contains(e.target)) return; setTimeout(showPalette, 200); }, {passive: true});
             document.addEventListener('mousedown', (e) => { if (!hlPalette.contains(e.target) && window.getSelection().isCollapsed) hlPalette.style.display = 'none'; });
             document.addEventListener('touchstart', (e) => { if (!hlPalette.contains(e.target) && window.getSelection().isCollapsed) hlPalette.style.display = 'none'; }, {passive:true});
