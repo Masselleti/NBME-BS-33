@@ -3514,6 +3514,39 @@
             } catch(e) { console.error(e); }
         }
 
+        // Reveal the correct answer + explanation without recording a choice
+        // (a study "peek"). Triggered by the spacebar in Learning mode.
+        function revealNbmeAnswer() {
+            if (currentMode !== 'learning' || learningAnswered) return false;
+            if (!currentQuestions || !currentQuestions[currentQuestionIndex]) return false;
+            if (!currentQData || !currentQData.answers || !currentQData.answers.length) return false;
+            const qId = currentQuestions[currentQuestionIndex].id;
+            learningAnswered = true;
+            const comm = document.getElementById('commentary-' + qId);
+            if (comm) comm.classList.add('show');
+            currentQData.answers.forEach(function (a) {
+                if (a.isCorrect) {
+                    const o = document.querySelector('.answer-option[data-option-id="' + a.answerID + '"]');
+                    if (o) o.classList.add('correct');
+                }
+            });
+            if (typeof uwRenderSidebar === 'function') uwRenderSidebar();
+            if (typeof maLoadHighlights === 'function') setTimeout(maLoadHighlights, 50);
+            return true;
+        }
+        // Spacebar reveals the answer in Learning mode (once); afterwards space
+        // scrolls normally. Ignored in inputs and while a modal is open.
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== ' ' && e.code !== 'Space' && e.keyCode !== 32) return;
+            const t = e.target;
+            if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+            if (!document.body.classList.contains('in-nbme-question')) return;
+            if (currentMode !== 'learning' || learningAnswered) return;
+            if (document.querySelector('.modal.show, .ma-modal-overlay.show, .time-up-modal.show, #lv-overlay.is-open')) return;
+            e.preventDefault();
+            revealNbmeAnswer();
+        });
+
         function selectOption(ansId, isCorrect) {
             const sel = window.getSelection(); if (sel && sel.toString().trim() !== '') return;
             const qId = currentQuestions[currentQuestionIndex].id;
