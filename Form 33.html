@@ -1349,6 +1349,12 @@
 .lv-window.lv-show-si .lv-table .lv-s { display: inline; }
 .lv-table .lv-na { color: #9aa3ad; }
 </style>
+<style id="ma-bullet-fix">/* Explanation/stem list indentation. The original list rule in the main
+   stylesheet is dropped by a CSS parse error, so the global *{padding:0} reset
+   leaves bullets unindented (protruding left). Re-add it in a clean block. */
+.nbme-skin .commentary-content ul,.nbme-skin .commentary-content ol,.nbme-skin.uw-skin .commentary-content ul,.nbme-skin.uw-skin .commentary-content ol,.nbme-skin .question-stem ul,.nbme-skin .question-stem ol,.nbme-skin.uw-skin .question-stem ul,.nbme-skin.uw-skin .question-stem ol{padding-left:32px !important;margin:8px 0 !important;list-style-position:outside !important;}
+.nbme-skin .commentary-content li,.nbme-skin.uw-skin .commentary-content li,.nbme-skin .question-stem li,.nbme-skin.uw-skin .question-stem li{padding-left:4px !important;margin-bottom:6px !important;}
+</style>
 </head>
 
 <body>
