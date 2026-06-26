@@ -2170,6 +2170,8 @@
             const sidebar = document.getElementById('uw-sidebar');
             if (!sidebar || !currentQuestions || currentQuestions.length === 0) return;
             const isExamMode = (currentMode === 'exam');
+            /* keep sidebar scroll position (UWorld-style) */
+            var __prevScroll = (window.__uwSidebarScroll != null) ? window.__uwSidebarScroll : sidebar.scrollTop;
             sidebar.innerHTML = currentQuestions.map((q, i) => {
                 const ans = userAnswers[q.id];
                 const isCurrent = i === currentQuestionIndex;
@@ -2188,6 +2190,13 @@
                      + (isFlagged ? '<span class="uw-q-flag">🚩</span>' : '')
                      + '</div>';
             }).join('');
+            sidebar.scrollTop = __prevScroll;
+            var __cur = sidebar.querySelector('.is-current');
+            if (__cur) { var __sr = sidebar.getBoundingClientRect(), __cr = __cur.getBoundingClientRect();
+                if (__cr.top < __sr.top) sidebar.scrollTop -= (__sr.top - __cr.top);
+                else if (__cr.bottom > __sr.bottom) sidebar.scrollTop += (__cr.bottom - __sr.bottom); }
+            window.__uwSidebarScroll = sidebar.scrollTop;
+            sidebar.onscroll = function () { window.__uwSidebarScroll = sidebar.scrollTop; };
         }
         function uwJumpTo(index) {
             if (index < 0 || index >= currentQuestions.length) return;
