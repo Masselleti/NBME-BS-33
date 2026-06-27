@@ -4,18 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <script>
-    /* === Ephemeral session (added by request) ===
-       All viewer state (highlights, flags, crossed-out choices, selected
-       answers, notes, timer) is kept ONLY for the current browser session.
-       Nothing is written to persistent localStorage, so closing the tab or
-       window discards everything; data saved by earlier sessions is purged on
-       load. Must run before embedded-assets.js and every app script. */
+    /* === Ephemeral session + persistent highlights (added by request) ===
+       HIGHLIGHTS PERSIST PERMANENTLY across sessions: keys prefixed "ma_hl_"
+       (the highlighter's stem/commentary/option highlight HTML) are written to
+       real localStorage and survive closing the tab/window.
+       ALL OTHER viewer state (flags, crossed-out choices / strikeouts, selected
+       answers, notes, timer, theme) stays session-only via sessionStorage and is
+       discarded on close. Non-highlight data saved by earlier sessions is purged
+       on load. To revert to fully-ephemeral, restore the old localStorage->session
+       redirect. Must run before embedded-assets.js and every app script. */
     (function () {
-      try { window.localStorage.clear(); } catch (e) {}
+      var realLS = null, ss = null;
+      try { realLS = window.localStorage; } catch (e) {}
+      try { ss = window.sessionStorage; } catch (e) {}
+      function isHL(k) { return typeof k === 'string' && k.indexOf('ma_hl_') === 0; }
+      /* Purge prior-session NON-highlight data from persistent storage; keep highlights. */
+      try {
+        var rm = [];
+        for (var i = 0; i < realLS.length; i++) { var k = realLS.key(i); if (k && !isHL(k)) rm.push(k); }
+        for (var j = 0; j < rm.length; j++) realLS.removeItem(rm[j]);
+      } catch (e) {}
+      /* Hybrid: ma_hl_* -> persistent localStorage; everything else -> ephemeral sessionStorage. */
+      var hybrid = {
+        getItem: function (k) { try { return isHL(k) ? realLS.getItem(k) : ss.getItem(k); } catch (e) { return null; } },
+        setItem: function (k, v) { try { if (isHL(k)) realLS.setItem(k, v); else ss.setItem(k, v); } catch (e) {} },
+        removeItem: function (k) { try { if (isHL(k)) realLS.removeItem(k); else ss.removeItem(k); } catch (e) {} },
+        clear: function () { try { ss.clear(); } catch (e) {} },
+        key: function (i) { try { return ss.key(i); } catch (e) { return null; } },
+        get length() { try { return ss.length; } catch (e) { return 0; } }
+      };
       try {
         Object.defineProperty(window, 'localStorage', {
           configurable: true,
-          get: function () { return window.sessionStorage; }
+          get: function () { return hybrid; }
         });
       } catch (e) {}
     })();
@@ -1063,6 +1084,26 @@
         .uw-bottom-tool .uw-bottom-tool-icon { font-size: 14px; line-height: 1; }
         .uw-bottom-tool.is-end { color: #000; }
         .uw-bottom-tool.is-end:hover { color: #333; }
+
+/* iPad / touch devices: let the question view scroll as a normal page so the
+   top bar + header move up when scrolling down. Desktop keeps the pinned,
+   exam-style shell (this only applies to touch-primary devices). */
+@media (hover: none) and (pointer: coarse) {
+    html:has(body.in-nbme-question), body.in-nbme-question {
+        height: auto !important; min-height: 100dvh !important; overflow: visible !important;
+    }
+    .nbme-skin.uw-skin {
+        position: static !important;
+        height: auto !important; min-height: 100dvh !important; max-height: none !important;
+        overflow: visible !important;
+        grid-template-rows: auto auto auto !important;
+    }
+    .nbme-skin.uw-skin .uw-body { overflow: visible !important; align-items: start !important; }
+    /* Keep the (large) question navigator viewport-bounded with its own scroll
+       so it can't inflate the page; sticky so it stays reachable. */
+    .nbme-skin.uw-skin .uw-sidebar { align-self: start !important; position: sticky !important; top: 0 !important; max-height: 100dvh !important; overflow-y: auto !important; }
+    .nbme-skin.uw-skin .uw-main { overflow-y: visible !important; height: auto !important; max-height: none !important; }
+}
 
         /* Reverse-color mode */
         .nbme-skin.uw-skin.nbme-reverse { background: #1a1a1a !important; }
