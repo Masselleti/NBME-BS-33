@@ -3507,7 +3507,12 @@
                 const __otherContainer = isExam ? document.getElementById('learning-questions') : document.getElementById('exam-questions');
                 // Both Learning AND Exam use the uw-skin layout
                 container.classList.add('nbme-skin', 'uw-skin');
-                if (__otherContainer) __otherContainer.classList.remove('nbme-skin', 'uw-skin');
+                if (__otherContainer) __otherContainer.classList.remove('nbme-skin', 'uw-skin', 'nbme-reverse');
+                // Carry the app dark theme (html.dark) into the question view on first entry to a set,
+                // so dark mode doesn't reset. Only on first entry — preserves a manual Reverse Color toggle mid-set.
+                if (!document.body.classList.contains('in-nbme-question')) {
+                    container.classList.toggle('nbme-reverse', document.documentElement.classList.contains('dark'));
+                }
                 document.body.classList.add('in-nbme-question');
                 container.innerHTML = html;
                 uwRenderSidebar();
