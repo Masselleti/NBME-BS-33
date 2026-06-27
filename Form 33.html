@@ -1139,6 +1139,7 @@
         .lm-row.lm-disabled:hover { background:transparent; }
         /* ===== Organ-system subcategories (nested under Pathology & Physiology) ===== */
         .lm-group { display:block; }
+        .lm-col { min-width:0; }
         .lm-toggle { flex:0 0 auto; width:16px; text-align:center; color:var(--muted); font-size:0.72em;
             line-height:1; cursor:pointer; user-select:none; transition:color .12s ease; }
         .lm-toggle:hover { color:var(--nbme-header-bot); }
@@ -2729,7 +2730,14 @@
         function buildDisciplineGrid(grid, selSet, onChange) {
             grid.innerHTML = '';
             const counts = disciplineCounts();
-            DISCIPLINE_DEFS.forEach(d => {
+            // Lay the disciplines out as two independent columns. The old 2-col CSS
+            // grid paired items into shared-height rows, so expanding a group on one
+            // side stretched its row and left a blank gap in the cell beside it.
+            // Two real columns flow independently (even idx -> left, odd -> right,
+            // which reproduces the original left/right placement). No gap.
+            const colL = document.createElement('div'); colL.className = 'lm-col';
+            const colR = document.createElement('div'); colR.className = 'lm-col';
+            DISCIPLINE_DEFS.forEach((d, i) => {
                 const total = counts[d.name] || 0;
                 const group = document.createElement('div');
                 group.className = 'lm-group';
@@ -2738,8 +2746,9 @@
                 } else {
                     group.appendChild(discLeafRow(d.name, d.name, 'Blueprint ' + d.range + '%', total, selSet, onChange, total === 0));
                 }
-                grid.appendChild(group);
+                (i % 2 === 0 ? colL : colR).appendChild(group);
             });
+            grid.appendChild(colL); grid.appendChild(colR);
         }
         function discLeafRow(leafKey, name, sub, count, selSet, onChange, disabled) {
             const row = document.createElement('label');
