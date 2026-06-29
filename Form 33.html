@@ -1398,6 +1398,12 @@
 .lv-window.lv-show-si .lv-table .lv-c { display: none; }
 .lv-window.lv-show-si .lv-table .lv-s { display: inline; }
 .lv-table .lv-na { color: #9aa3ad; }
+/* The Lab Values popup is theme-independent (always light). The global
+   "p,span,li,td,th,small { color: var(--text) }" rule would otherwise make
+   its cell text follow the app's dark/reverse theme -> light-on-light and
+   invisible. Pin --text to a dark value within the popup so its text stays
+   readable in dark/reverse mode (blue group/section colors are unaffected). */
+.lv-overlay { --text: #1a1a1a !important; }
 </style>
 <style id="ma-bullet-fix">/* Explanation/stem list indentation. The original list rule in the main
    stylesheet is dropped by a CSS parse error, so the global *{padding:0} reset
