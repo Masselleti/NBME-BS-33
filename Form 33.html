@@ -1097,11 +1097,19 @@
         height: auto !important; min-height: 100dvh !important; max-height: none !important;
         overflow: visible !important;
         grid-template-rows: auto auto auto !important;
+        align-content: start !important;
+        padding-left: 100px !important;
     }
-    .nbme-skin.uw-skin .uw-body { overflow: visible !important; align-items: start !important; }
-    /* Keep the (large) question navigator viewport-bounded with its own scroll
-       so it can't inflate the page; sticky so it stays reachable. */
-    .nbme-skin.uw-skin .uw-sidebar { align-self: start !important; position: sticky !important; top: 0 !important; max-height: 100dvh !important; overflow-y: auto !important; }
+    .nbme-skin.uw-skin .uw-body { overflow: visible !important; }
+    /* Question navigator becomes a fixed left rail (out of normal flow) so it
+       can never inflate the page height -- this prevents scrolling into empty
+       space below the content. It stays visible and scrolls independently. */
+    .nbme-skin.uw-skin .uw-sidebar {
+        position: fixed !important; left: 0 !important; top: 0 !important;
+        width: 100px !important; min-width: 0 !important; max-width: none !important;
+        height: 100dvh !important; max-height: 100dvh !important;
+        overflow-y: auto !important; z-index: 30 !important;
+    }
     .nbme-skin.uw-skin .uw-main { overflow-y: visible !important; height: auto !important; max-height: none !important; }
 }
 
