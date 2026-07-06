@@ -1461,6 +1461,30 @@
 .nbme-skin .commentary-content ul,.nbme-skin .commentary-content ol,.nbme-skin.uw-skin .commentary-content ul,.nbme-skin.uw-skin .commentary-content ol,.nbme-skin .question-stem ul,.nbme-skin .question-stem ol,.nbme-skin.uw-skin .question-stem ul,.nbme-skin.uw-skin .question-stem ol{padding-left:32px !important;margin:8px 0 !important;list-style-position:outside !important;}
 .nbme-skin .commentary-content li,.nbme-skin.uw-skin .commentary-content li,.nbme-skin .question-stem li,.nbme-skin.uw-skin .question-stem li{padding-left:4px !important;margin-bottom:6px !important;}
 </style>
+<style id="ma-hl-darktext-fix">/* HL-DARKTEXT-FIX: user text highlights use pale pastel backgrounds. In
+   reverse (dark) mode the reverse-color "* { color: light }" rules repainted
+   the highlighted text light-on-pastel (unreadable), and ".option-text *
+   { background: transparent }" stripped the pastel off highlights inside
+   answer options (leaving them background-less -> dark-on-dark once the text
+   is forced dark). Re-assert BOTH dark text and the pastel background on the
+   highlight spans (and any nested inline children) in every highlightable
+   area. Specificity (0,5,0) + last in source, so it wins over the reverse
+   mega-selectors and the option-text reset. */
+.nbme-skin.uw-skin.nbme-reverse .question-stem :is(.hl-yellow,.hl-green,.hl-blue),
+.nbme-skin.uw-skin.nbme-reverse .question-stem :is(.hl-yellow,.hl-green,.hl-blue) *,
+.nbme-skin.uw-skin.nbme-reverse .answer-option :is(.hl-yellow,.hl-green,.hl-blue),
+.nbme-skin.uw-skin.nbme-reverse .answer-option :is(.hl-yellow,.hl-green,.hl-blue) *,
+.nbme-skin.uw-skin.nbme-reverse .commentary-content :is(.hl-yellow,.hl-green,.hl-blue),
+.nbme-skin.uw-skin.nbme-reverse .commentary-content :is(.hl-yellow,.hl-green,.hl-blue) * {
+    color: #1f2937 !important;
+}
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-yellow,
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-yellow * { background-color: #fff6a7 !important; }
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-green,
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-green * { background-color: #c8f7c5 !important; }
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-blue,
+.nbme-skin.uw-skin.nbme-reverse :is(.question-stem,.answer-option,.commentary-content) .hl-blue * { background-color: #cfe9ff !important; }
+</style>
 </head>
 
 <body>
