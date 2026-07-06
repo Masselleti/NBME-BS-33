@@ -1426,12 +1426,34 @@
 .lv-window.lv-show-si .lv-table .lv-c { display: none; }
 .lv-window.lv-show-si .lv-table .lv-s { display: inline; }
 .lv-table .lv-na { color: #9aa3ad; }
-/* The Lab Values popup is theme-independent (always light). The global
-   "p,span,li,td,th,small { color: var(--text) }" rule would otherwise make
-   its cell text follow the app's dark/reverse theme -> light-on-light and
-   invisible. Pin --text to a dark value within the popup so its text stays
-   readable in dark/reverse mode (blue group/section colors are unaffected). */
+/* The Lab Values popup follows the exam theme: nbmeOpenLabValues() toggles
+   .lv-dark on the overlay at open time from the active question view's
+   reverse-color state (else the app dark mode). Pin --text inside the popup
+   so the global "p,span,li,td,th,small { color: var(--text) }" rule can't
+   leak the app theme in and leave the table text unreadable. */
 .lv-overlay { --text: #1a1a1a !important; }
+.lv-overlay.lv-dark { --text: #e8ecf2 !important; }
+/* Dark skin for the popup (matches the reverse-color exam palette) */
+.lv-overlay.lv-dark .lv-window { background: #23272e; border-color: #4a5160; color: #e8ecf2; color-scheme: dark; }
+.lv-overlay.lv-dark .lv-titlebar { background: #343a44; border-bottom-color: #4a5160; }
+.lv-overlay.lv-dark .lv-title { color: #e8ecf2; }
+.lv-overlay.lv-dark .lv-close-btn { color: #c8cfd9; }
+.lv-overlay.lv-dark .lv-close-btn:hover { color: #fff; }
+.lv-overlay.lv-dark .lv-toolbar { background: #23272e; border-bottom-color: #3a404c; }
+.lv-overlay.lv-dark .lv-search { background: #1a1e24; border-color: #5a6270; color: #e8ecf2; }
+.lv-overlay.lv-dark .lv-si { color: #6fb3e0; }
+.lv-overlay.lv-dark .lv-tabs { background: #23272e; border-bottom-color: #4a5160; }
+.lv-overlay.lv-dark .lv-tab { background: #23272e; border-color: #4a5160; color: #e8ecf2; }
+.lv-overlay.lv-dark .lv-tab:hover { background: #2c313a; }
+.lv-overlay.lv-dark .lv-tab.is-active { background: #2f3542; border-bottom-color: #2f3542; }
+.lv-overlay.lv-dark .lv-panel { background: #2f3542; }
+.lv-overlay.lv-dark .lv-table { color: #e8ecf2; }
+.lv-overlay.lv-dark .lv-table thead th { background: #2f3542; border-bottom-color: #4a5160; }
+.lv-overlay.lv-dark .lv-table thead th:nth-child(2) { color: #6fb3e0; }
+.lv-overlay.lv-dark .lv-table tbody td { border-bottom-color: #454c5a; }
+.lv-overlay.lv-dark .lv-table tbody tr:hover td { background: rgba(255,255,255,0.06); }
+.lv-overlay.lv-dark .lv-table .lv-group { color: #6fb3e0; }
+.lv-overlay.lv-dark .lv-table .lv-na { color: #8a93a3; }
 </style>
 <style id="ma-bullet-fix">/* Explanation/stem list indentation. The original list rule in the main
    stylesheet is dropped by a CSS parse error, so the global *{padding:0} reset
@@ -1780,6 +1802,13 @@
         function nbmeOpenLabValues() {
             const overlay = document.getElementById('lv-overlay');
             if (!overlay) return;
+            // Theme the popup to what it opens over: the active question view's
+            // reverse-color state (same element the Reverse Color tool targets),
+            // else the app-level dark mode.
+            const skin = document.querySelector('.uw-skin, .nbme-skin');
+            const dark = skin ? skin.classList.contains('nbme-reverse')
+                              : document.documentElement.classList.contains('dark');
+            overlay.classList.toggle('lv-dark', dark);
             overlay.classList.add('is-open');
             const search = document.getElementById('lv-search');
             if (search) { search.value = ''; lvFilterRows(''); setTimeout(() => search.focus(), 0); }
