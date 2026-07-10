@@ -2723,7 +2723,7 @@
                 if (discHasSubcats(d.name) && total > 0) {
                     group.appendChild(discParentGroup(d, total, selSet, onChange));
                 } else {
-                    group.appendChild(discLeafRow(d.name, d.name, 'Blueprint ' + d.range + '%', total, selSet, onChange, total === 0));
+                    group.appendChild(discLeafRow(d.name, d.name, total + ' Questions', total, selSet, onChange, total === 0));
                 }
                 (i % 2 === 0 ? colL : colR).appendChild(group);
             });
@@ -2751,7 +2751,7 @@
             const tog = document.createElement('span'); tog.className = 'lm-toggle'; tog.textContent = '▶';
             const cb = document.createElement('input'); cb.type = 'checkbox'; cb.className = 'lm-cb';
             const nameWrap = document.createElement('span'); nameWrap.className = 'lm-name';
-            nameWrap.innerHTML = d.name + '<span class="lm-sub">Blueprint ' + d.range + '% · by organ system</span>';
+            nameWrap.innerHTML = d.name + '<span class="lm-sub">' + total + ' Questions · by organ system</span>';
             const cnt = document.createElement('span'); cnt.className = 'lm-count'; cnt.textContent = total;
             prow.appendChild(tog); prow.appendChild(cb); prow.appendChild(nameWrap); prow.appendChild(cnt);
             const childWrap = document.createElement('div'); childWrap.className = 'lm-children';
@@ -4075,7 +4075,7 @@ window.uwCopyQuestion = function(btn){
 
 html.ma-phone body.in-nbme-question #ma-nav-fab {
     display: flex; position: fixed;
-    left: 12px; bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 12px; bottom: calc(14px + env(safe-area-inset-bottom));
     width: 50px; height: 50px; border-radius: 50%;
     align-items: center; justify-content: center;
     background: #fff; color: #111;
@@ -4111,7 +4111,7 @@ html.ma-phone .nbme-skin.uw-skin .uw-main { overflow: visible !important; height
 html.ma-phone .nbme-skin.uw-skin { padding-left: 0 !important; }
 html.ma-phone .nbme-skin.uw-skin .uw-sidebar {
     position: fixed !important; left: 0 !important; top: 0 !important;
-    width: 140px !important; min-width: 0 !important; max-width: 75vw !important;
+    width: 84px !important; min-width: 0 !important; max-width: 75vw !important;
     height: 100dvh !important; max-height: 100dvh !important;
     overflow-y: auto !important; -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -4122,7 +4122,7 @@ html.ma-phone .nbme-skin.uw-skin .uw-sidebar {
     padding-bottom: calc(16px + env(safe-area-inset-bottom)) !important;
 }
 html.ma-phone body.ma-nav-open .nbme-skin.uw-skin .uw-sidebar { transform: translateX(0); }
-html.ma-phone .nbme-skin.uw-skin .uw-q-item { padding: 11px 14px !important; font-size: 14px !important; }
+html.ma-phone .nbme-skin.uw-skin .uw-q-item { padding: 11px 8px !important; font-size: 14px !important; }
 html.ma-phone .nbme-skin.uw-skin .uw-q-bullet { width: 10px !important; height: 10px !important; }
 
 /* Header: let it wrap to two rows, drop dead weight, real tap targets */
@@ -4146,12 +4146,15 @@ html.ma-phone .nbme-skin.uw-skin .uw-tool {
        divider lines (user request 2026-07-10) */
     flex: 1 1 auto !important;
 }
+/* the ⋮ Tools toggle is a .uw-tool but sits in the header row, not the
+   tools row - keep it compact and pinned right (user request 2026-07-10) */
+html.ma-phone .nbme-skin.uw-skin .ma-tools-toggle { flex: 0 0 auto !important; margin-left: auto !important; }
 html.ma-phone .nbme-skin.uw-skin .uw-tool .uw-tool-icon { font-size: 14px !important; }
 /* iPhone WebKit has no element fullscreen API — hide the dead button */
 html.ma-phone .nbme-skin.uw-skin .uw-tool[title*="full" i] { display: none !important; }
 
 /* Bottom Block Time / End Block bar: bigger targets, clear the FAB */
-html.ma-phone .nbme-skin.uw-skin .uw-bottom-bar { padding: 6px 12px 6px 72px !important; }
+html.ma-phone .nbme-skin.uw-skin .uw-bottom-bar { flex-direction: row-reverse !important; padding: 6px 72px 6px 12px !important; }
 html.ma-phone .nbme-skin.uw-skin .uw-bottom-tool { font-size: 11px !important; padding: 6px 10px !important; min-height: 40px; }
 html.ma-phone .nbme-skin.uw-skin .uw-bottom-tool .uw-bottom-tool-icon { font-size: 16px !important; }
 /* Tapping the elapsed-time area reveals the answer (like spacebar); the buttons
