@@ -2428,7 +2428,7 @@
                     return;
                 }
 
-                const response = await fetch('assets/Data/categories.json');
+                const response = await fetch('assets/Data/categories.json', { cache: 'no-cache' });
                 if (response.ok) {
                     const data = await response.json();
                     categoriesStructure = data.categories || [];
@@ -2458,7 +2458,7 @@
                 }
 
                 if (!databaseBytes) {
-                    const response = await fetch(dbPath);
+                    const response = await fetch(dbPath, { cache: 'no-cache' });
                     if (!response.ok) throw new Error();
                     const buffer = await response.arrayBuffer();
                     databaseBytes = new Uint8Array(buffer);
