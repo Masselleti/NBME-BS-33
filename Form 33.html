@@ -3829,7 +3829,8 @@
                 const isLearning = (typeof currentMode !== 'undefined' && currentMode === 'learning');
                 const navNext = () => { if (typeof navQ === 'function') navQ(1); else if (isLearning && typeof nextLearningQuestion === 'function') nextLearningQuestion(); };
                 const navPrev = () => { if (typeof navQ === 'function') navQ(-1); else if (isLearning && typeof previousLearningQuestion === 'function') previousLearningQuestion(); };
-                if (e.key === ' ') { e.preventDefault(); navNext(); }
+                // Two-step Space: the reveal handler consumes the first press (defaultPrevented) to show the answer; an unconsumed press advances
+                if (e.key === ' ') { if (!e.defaultPrevented) { e.preventDefault(); navNext(); } }
                 if (e.key === 'ArrowRight') { navNext(); }
                 if (e.key === 'ArrowLeft') { navPrev(); }
             }
